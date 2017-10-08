@@ -1,5 +1,5 @@
 <!doctype html>
-<html ng-app="myApp" lang="en" amp>
+<html ng-app="myApp" amp>
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -8,8 +8,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,700" rel="stylesheet">
 	<style>
+		 @font-face{font-family:'Noto Sans Thai';font-style:normal;font-weight:400;src:url(//fonts.gstatic.com/ea/notosansthai/v3/NotoSansThai-Regular.eot);src:url(//fonts.gstatic.com/ea/notosansthai/v3/NotoSansThai-Regular.eot?#iefix) format("embedded-opentype"),url(//fonts.gstatic.com/ea/notosansthai/v3/NotoSansThai-Regular.woff2) format("woff2"),url(//fonts.gstatic.com/ea/notosansthai/v3/NotoSansThai-Regular.woff) format("woff"),url(//fonts.gstatic.com/ea/notosansthai/v3/NotoSansThai-Regular.ttf) format("truetype")}@font-face{font-family:'Noto Sans Thai';font-style:normal;font-weight:700;src:url(//fonts.gstatic.com/ea/notosansthai/v3/NotoSansThai-Bold.eot);src:url(//fonts.gstatic.com/ea/notosansthai/v3/NotoSansThai-Bold.eot?#iefix) format("embedded-opentype"),url(//fonts.gstatic.com/ea/notosansthai/v3/NotoSansThai-Bold.woff2) format("woff2"),url(//fonts.gstatic.com/ea/notosansthai/v3/NotoSansThai-Bold.woff) format("woff"),url(//fonts.gstatic.com/ea/notosansthai/v3/NotoSansThai-Bold.ttf) format("truetype")} 
 		body{
-			font-family: 'Noto Sans', sans-serif;
+			font-family: 'Noto Sans', 'Noto Sans Thai', sans-serif;
 			margin: 0px;
 			padding: 0px;
 		}
@@ -62,18 +63,19 @@
 		    color: #fff;
 		    font-size: 14px;
 		    font-weight: 500;
+		    font-family: 'Noto Sans', 'Noto Sans Thai', sans-serif;
 		}
 		div.days:after {
-		    content: "Days"
+		    content: attr(data-content)
 		}
 		div.hours:after {
-		    content: "Hours"
+		    content: attr(data-content)
 		}
 		div.minutes:after {
-		    content: "Mins"
+		    content: attr(data-content)
 		}
 		div.seconds:after {
-		    content: "Seconds"
+		    content: attr(data-content)
 		}
 		.digit {
 		    display: block;
@@ -126,25 +128,6 @@
 		    
 		}
 	</style>
-	<script>
-		function getLang(){
-			var query = window.location.search.substring(1);
-			var vars = query.split("&");
-			for (var i=0;i<vars.length;i++) {
-				var pair = vars[i].split("=");
-				if(pair[0] == 'lang'){
-					return pair[1];
-				}
-			}
-
-			return 'en';	
-		}
-
-		var lang = getLang();
-		console.log(lang);
-		
-       
-	</script>
 </head>
 <body >
 	<div class="vote-countdown" id="countdown">
@@ -177,6 +160,40 @@
                 var interval = setInterval(updateClock,1000);
             };
         
+        $(document).ready(function(){
+
+		function getLang(){
+			var query = window.location.search.substring(1);
+			var vars = query.split("&");
+				for (var i=0;i<vars.length;i++) {
+					var pair = vars[i].split("=");
+					if(pair[0] == 'lang'){
+						return pair[1];
+					}
+				}
+
+				return 'en';	
+			}
+
+			var lang = getLang();
+			switch( lang ){
+				case 'th' : $('.days').attr('data-content', 'วัน');
+							$('.hours').attr('data-content', 'ชั่วโมง');
+							$('.minutes').attr('data-content', 'นาที');
+							$('.seconds').attr('data-content', 'วินาที');
+					break;
+				case 'id' : $('.days').attr('data-content', 'Hari');
+							$('.hours').attr('data-content', 'Jam');
+							$('.minutes').attr('data-content', 'Menit');
+							$('.seconds').attr('data-content', 'Detik');
+					break;
+				default :   $('.days').attr('data-content', 'Days');
+							$('.hours').attr('data-content', 'Hours');
+							$('.minutes').attr('data-content', 'Mins');
+							$('.seconds').attr('data-content', 'Seconds');
+					break;
+			}   
+        });
 	</script>
 </body>
 </html>
