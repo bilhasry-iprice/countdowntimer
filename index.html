@@ -149,28 +149,43 @@
 	<script>
 		window.onload = function(){
 
-              var deadline = new Date("2017/11/11");
-                function updateClock(){
-                    var today = Date();
-                    var diff = Date.parse(deadline) - Date.parse(today);
-                    if(diff<=0){
-                        clearInterval(interval);
-                    }
-                    else{
-                        var seconds = Math.floor((diff/1000)%60);
-                        var minutes = Math.floor((diff/1000/60)%60);
-                        var hours = Math.floor((diff/1000/60/60)%24);
-                        var days = Math.floor(diff/(1000*60*60*24));
-                        // var months = Math.floor(diff/(1000*60*60*24*30.5)%12);
-                        // $(".months").text(('0'+months).slice(-2));
-                        $(".days").text(('0'+days).slice(-2));
-                        $(".hours").text(('0'+hours).slice(-2));
-                        $(".minutes").text(('0'+minutes).slice(-2));
-                        $(".seconds").text(('0'+seconds).slice(-2));
-                    }//EOF ELSE
-                }//EOF FUNCTION
-                var interval = setInterval(updateClock,1000);
-            };
+			function getParameterByName(name, url) {
+			    if (!url) url = window.location.href;
+			    name = name.replace(/[\[\]]/g, "\\$&");
+			    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+			        results = regex.exec(url);
+			    if (!results) return null;
+			    if (!results[2]) return '';
+			    return decodeURIComponent(results[2].replace(/\+/g, " "));
+			}
+
+			var date = getParameterByName('date');
+
+			var deadline = ( date !== null ) ? new Date(date) : new Date("2017/11/11");
+
+			function updateClock(){
+				var today = Date();
+				var diff = Date.parse(deadline) - Date.parse(today);
+				if(diff<=0){
+					clearInterval(interval);
+				}
+				else{
+					var seconds = Math.floor((diff/1000)%60);
+					var minutes = Math.floor((diff/1000/60)%60);
+					var hours = Math.floor((diff/1000/60/60)%24);
+					var days = Math.floor(diff/(1000*60*60*24));
+					// var months = Math.floor(diff/(1000*60*60*24*30.5)%12);
+					// $(".months").text(('0'+months).slice(-2));
+					$(".days").text(('0'+days).slice(-2));
+					$(".hours").text(('0'+hours).slice(-2));
+					$(".minutes").text(('0'+minutes).slice(-2));
+					$(".seconds").text(('0'+seconds).slice(-2));
+				}//EOF ELSE
+			}//EOF FUNCTION
+
+			var interval = setInterval(updateClock,1000);
+
+        };
         
         $(document).ready(function(){
 
