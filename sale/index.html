@@ -1,0 +1,137 @@
+<!doctype html>
+<html ng-app="myApp" amp>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<title>Countdown Timer</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://fonts.googleapis.com/css?family=Paytone+One" rel="stylesheet">
+	<style>
+		body{
+			font-family: 'Noto Sans', 'Noto Sans Thai', sans-serif;
+			margin: 0px;
+			padding: 0px;
+		}
+		#countdown {
+		    position: absolute;
+		    display: block;
+		    width: 100%;
+		    top: 10px;
+		    background-size: 100%;
+		    background-position: center;
+		    -webkit-box-sizing: border-box;
+		    -moz-box-sizing: border-box;
+		    box-sizing: border-box;
+		}
+		#countdown .time-parent {
+		    margin: 10px auto 0 auto;
+		    width: 100%;
+		    display: -webkit-box;
+		    display: -webkit-flex;
+		    display: -ms-flexbox;
+		    display: flex;
+		    flex-wrap: wrap;
+		}
+
+		#countdown .time-parent div.hours,
+		#countdown .time-parent div.minutes,
+		#countdown .time-parent div.seconds {
+		    display: flex;
+		    flex-direction: column;
+		    width: calc(100%/3);
+		    -webkit-box-sizing: border-box;
+		    text-align: center;
+		    font-size: 24px;
+		    font-weight: bold;
+		    text-align: center;
+		    color: #333;
+		    font-family: 'Paytone One', sans-serif;
+		    position:relative;
+		    padding: 0px 10px;
+		    
+		}
+		#countdown .time-parent div:after{
+			content: ':';
+			position: absolute;
+			right: -5px;
+			top: 0px;
+
+		}
+		.time-parent > div:last-child:after{
+		    display:none;
+		}
+
+		@media screen and (min-width: 480px){
+			#countdown .time-parent {
+		        max-width: 146px;
+		    }
+		}
+	</style>
+</head>
+<body >
+	<div class="vote-countdown" id="countdown">
+		<div class="time-parent">
+		<div class='hours'></div><div class='minutes'></div><div class='seconds'></div></div>
+		</div>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+	<script>
+		window.onload = function(){
+
+			function getParameterByName(name, url) {
+			    if (!url) url = window.location.href;
+			    name = name.replace(/[\[\]]/g, "\\$&");
+			    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+			        results = regex.exec(url);
+			    if (!results) return null;
+			    if (!results[2]) return '';
+			    return decodeURIComponent(results[2].replace(/\+/g, " "));
+			}
+
+			var date = getParameterByName('date');
+
+			var deadline = ( date !== null ) ? new Date(date) : new Date("12/11/2017 23:59:59");
+
+			console.log(deadline);
+			function updateClock(){
+				var today = Date("12/11/2017 00:00:01");
+				var diff = Date.parse(deadline) - Date.parse(today);
+				console.log(diff);
+				if(diff<=0){
+					clearInterval(interval);
+				}
+				else{
+					var seconds = Math.floor((diff/1000)%60);
+					var minutes = Math.floor((diff/1000/60)%60);
+					var hours = Math.floor((diff/1000/60/60)%24);
+					
+					$(".hours").text(('0'+hours).slice(-2));
+					$(".minutes").text(('0'+minutes).slice(-2));
+					$(".seconds").text(('0'+seconds).slice(-2));
+				}//EOF ELSE
+			}//EOF FUNCTION
+
+			var interval = setInterval(updateClock,1000);
+
+        };
+        
+        $(document).ready(function(){
+
+		function getLang(){
+			var query = window.location.search.substring(1);
+			var vars = query.split("&");
+				for (var i=0;i<vars.length;i++) {
+					var pair = vars[i].split("=");
+					if(pair[0] == 'lang'){
+						return pair[1];
+					}
+				}
+
+				return 'en';	
+			}
+
+        });
+	</script>
+</body>
+</html>
