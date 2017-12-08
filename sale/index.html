@@ -31,6 +31,7 @@
 		    display: -ms-flexbox;
 		    display: flex;
 		    flex-wrap: wrap;
+		    max-width: 196px;
 		}
 
 		#countdown .time-parent div.hours,
@@ -38,35 +39,27 @@
 		#countdown .time-parent div.seconds {
 		    display: flex;
 		    flex-direction: column;
-		    width: calc(100%/3);
+		    width: calc(33.33% - 5px);
 		    -webkit-box-sizing: border-box;
 		    text-align: center;
 		    font-size: 2em;
+		    padding: 10px;
+		    background: #014126;
+		    color:#fff;
+		    border-radius: 5px;
+		    margin-right: 5px;
 		    line-height: 1;
 		    font-weight: bold;
 		    text-align: center;
-		    color: #333;
 		    font-family: 'Paytone One', sans-serif;
 		    position:relative;
-		    padding: 0px 10px;
 		    
 		}
-		#countdown .time-parent div:after{
-			content: ':';
-			position: absolute;
-			right: -5px;
-			top: 0px;
-
-		}
+		
 		.time-parent > div:last-child:after{
 		    display:none;
 		}
 
-		@media screen and (min-width: 480px){
-			#countdown .time-parent {
-		        max-width: 146px;
-		    }
-		}
 	</style>
 </head>
 <body >
